@@ -1,0 +1,87 @@
+commit 95bf7e2bc84eb437d89b4e10e9e22f14cac556dc
+Author: Ghislain MARY <ghislain.mary@belledonne-communications.com>
+Date:   Tue Mar 14 12:48:42 2023 +0100
+
+    Update CMakeLists.txt so that the project can be added as a subdirectory of linphone-sdk.
+    
+    Do not treat warnings as errors when building with gcc or clang.
+    
+    fix cross compilation issue with try_run
+
+diff --git a/external/linphone-sdk/external/liboqs/.CMake/gcc_clang_intrinsics.cmake b/external/linphone-sdk/external/liboqs/.CMake/gcc_clang_intrinsics.cmake
+index fd45d753..2f079da8 100644
+--- a/external/linphone-sdk/external/liboqs/.CMake/gcc_clang_intrinsics.cmake
++++ b/external/linphone-sdk/external/liboqs/.CMake/gcc_clang_intrinsics.cmake
+@@ -1,12 +1,13 @@
+ # SPDX-License-Identifier: MIT
+-
+-try_run(RUN_RESULT COMPILE_RESULT
+-        "${CMAKE_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/.CMake/detect_gcc_clang_intrinsics.c"
+-        COMPILE_DEFINITIONS ${OQS_OPT_FLAG}
+-        COMPILE_OUTPUT_VARIABLE COMPILE_OUTPUT
+-        RUN_OUTPUT_VARIABLE RUN_OUTPUT)
+-if(NOT COMPILE_RESULT)
+-     message(FATAL_ERROR "Could not compile .CMake/detect_gcc_clang_intrinsics.c" ${COMPILE_OUTPUT})
++if(NOT CMAKE_CROSSCOMPILING)
++	try_run(RUN_RESULT COMPILE_RESULT
++        	"${CMAKE_BINARY_DIR}" "${PROJECT_SOURCE_DIR}/.CMake/detect_gcc_clang_intrinsics.c"
++        	COMPILE_DEFINITIONS ${OQS_OPT_FLAG}
++        	COMPILE_OUTPUT_VARIABLE COMPILE_OUTPUT
++        	RUN_OUTPUT_VARIABLE RUN_OUTPUT)
++	if(NOT COMPILE_RESULT)
++     	message(FATAL_ERROR "Could not compile .CMake/detect_gcc_clang_intrinsics.c" ${COMPILE_OUTPUT})
++	endif()
+ endif()
+ if(NOT RUN_RESULT EQUAL 0)
+ 	if(CMAKE_CROSSCOMPILING)
+diff --git a/external/linphone-sdk/external/liboqs/src/CMakeLists.txt b/external/linphone-sdk/external/liboqs/src/CMakeLists.txt
+index 09f00cf2..060250b9 100644
+--- a/external/linphone-sdk/external/liboqs/src/CMakeLists.txt
++++ b/external/linphone-sdk/external/liboqs/src/CMakeLists.txt
+@@ -123,7 +123,15 @@ endif()
+ 
+ target_include_directories(oqs
+                            PUBLIC
++                           "$<BUILD_INTERFACE:${PROJECT_BINARY_DIR}/include>"
+                            "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/common>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/common/aes>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/common/sha2>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/common/sha3>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/common/rand>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/kem>"
++                           "$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/sig>"
+                            "$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>"
+ )
+ 
+diff --git a/external/linphone-sdk/external/liboqs/src/oqs.h b/external/linphone-sdk/external/liboqs/src/oqs.h
+index d6833bcb..916d6c58 100644
+--- a/external/linphone-sdk/external/liboqs/src/oqs.h
++++ b/external/linphone-sdk/external/liboqs/src/oqs.h
+@@ -13,6 +13,19 @@
+ 
+ #include <oqs/oqsconfig.h>
+ 
++#ifdef LIBOQS_USE_BUILD_INTERFACE
++
++#include <common.h>
++#include <aes.h>
++#include <sha2.h>
++#include <sha3.h>
++#include <sha3x4.h>
++#include <rand.h>
++#include <kem.h>
++#include <sig.h>
++
++#else
++
+ #include <oqs/common.h>
+ #include <oqs/rand.h>
+ #include <oqs/kem.h>
+@@ -23,4 +36,6 @@
+ #include <oqs/sha3_ops.h>
+ #include <oqs/sha3x4_ops.h>
+ 
++#endif
++
+ #endif // OQS_H
