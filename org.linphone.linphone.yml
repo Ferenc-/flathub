@@ -473,10 +473,5 @@ modules:
           - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
           - patches/sdk/external/speex/Add-CMake.patch
           - patches/sdk/external/xerces-c/Fix-C++-minimum-level.patch
-  - name: metainfo
-    buildsystem: simple
-    build-commands:
-      - install -Dm644 metainfo.xml ${FLATPAK_DEST}/share/metainfo/${FLATPAK_ID}.metainfo.xml
-    sources:
       - type: file
-        path: metainfo.xml
+        path: org.linphone.linphone.metainfo.xml
