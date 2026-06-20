@@ -42,9 +42,7 @@ modules:
           packagetype: bdist_wheel
           type: pypi
     cleanup:
-      - /bin/pystache
-      - /bin/pystache-test
-      - /lib/python3.13
+      - "*"
   ## Binary dependencies
   - name: yasm
     buildsystem: autotools
@@ -62,12 +60,7 @@ modules:
           - patches/yasm/1020-hash-null-CVE-2021-33456.patch
           - patches/yasm/autoconf.patch
     cleanup:
-      - /include
-      - /lib/*.a
-      - /share
-      - /bin/vsyasm
-      - /bin/yasm
-      - /bin/ytasm
+      - "*"
   - "shared-modules/glu/glu-9.json"
   - "shared-modules/glew/glew.json"
   # Linphone
