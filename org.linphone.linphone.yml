@@ -17,13 +17,6 @@ finish-args:
   - --talk-name=org.freedesktop.ScreenSaver
   - --talk-name=org.gtk.Notifications
   - --talk-name=org.gnome.SessionManager
-cleanup:
-  - /bin/pystache
-  - /bin/pystache-test
-  - /bin/vsyasm
-  - /bin/yasm
-  - /bin/ytasm
-  - /lib/python3.13
 modules:
   # Development tools from:
   # https://github.com/BelledonneCommunications/linphone-desktop/blob/master/docker-files/bc-dev-ubuntu-22-04-lts
@@ -48,6 +41,10 @@ modules:
           name: six
           packagetype: bdist_wheel
           type: pypi
+    cleanup:
+      - /bin/pystache
+      - /bin/pystache-test
+      - /lib/python3.13
   ## Binary dependencies
   - name: yasm
     buildsystem: autotools
@@ -68,6 +65,9 @@ modules:
       - /include
       - /lib/*.a
       - /share
+      - /bin/vsyasm
+      - /bin/yasm
+      - /bin/ytasm
   - "shared-modules/glu/glu-9.json"
   - "shared-modules/glew/glew.json"
   # Linphone
