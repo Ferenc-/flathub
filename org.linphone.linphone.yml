@@ -157,9 +157,6 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
-      - -DCMAKE_INCLUDE_PATH=/app/include
-      - -DCMAKE_LIBRARY_PATH=/app/lib
-      - -DCMAKE_LIBRARY_PATH=/app/lib
       - -DENABLE_DOC=OFF
       - -DENABLE_FFMPEG=OFF # <- Not needed by mediastreamer2 anymore and just causes compilation issues 10+ years old (n0.10.2) baseline
       - -DENABLE_GPL_THIRD_PARTIES=ON
