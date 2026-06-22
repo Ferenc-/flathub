@@ -3,6 +3,8 @@ runtime: org.kde.Platform
 runtime-version: "6.10"
 sdk: org.kde.Sdk
 command: linphone
+rename-desktop-file: linphone.desktop
+rename-icon: linphone
 finish-args:
   # NOTE: As long as /dev/video is directly needed and neither the Camera portal nor device=usb helps (also used for USB microphones)
   - --device=all
@@ -169,7 +171,7 @@ modules:
       # Option added by `CMake-flatpak-packaging.patch`
       - -DFLATPAK_ID=org.linphone.linphone
     post-install:
-      - desktop-file-edit --set-key="Icon" --set-value="${FLATPAK_ID}" ${FLATPAK_DEST}/share/applications/${FLATPAK_ID}.desktop
+      - desktop-file-edit --set-key="Icon" --set-value="${FLATPAK_ID}" ${FLATPAK_DEST}/share/applications/linphone.desktop
     sources:
       - type: archive
         url: https://github.com/BelledonneCommunications/linphone-desktop/archive/refs/tags/6.1.2.tar.gz
