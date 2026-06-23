@@ -182,12 +182,6 @@ modules:
       - -DBUILD_DAV1D=OFF
       - -DBUILD_AOM=OFF
       - -DENABLE_AV1=ON # Otherwise forced OFF, when BUILD_DAV1D=OFF, and this needs, and also forces ENABLE_VIDEO=ON
-      # <WORKAROUND BUGGY-FILE="FindDav1d.cmake,FindAom.cmake">
-      - -D_Dav1d_INCLUDE_DIRS=/usr/include/
-      - -D_Dav1d_LIBRARY=/usr/lib/x86_64-linux-gnu/libdav1d.so
-      - -D_Aom_INCLUDE_DIRS=/usr/include/
-      - -D_Aom_LIBRARY=/usr/lib/x86_64-linux-gnu/libaom.so
-      # </WORKAROUND>
       - -DENABLE_DOC=OFF
       - -DENABLE_FFMPEG=OFF # <- Not needed by mediastreamer2 anymore and just causes compilation issues 10+ years old (n0.10.2) baseline
       - -DENABLE_GPL_THIRD_PARTIES=ON
@@ -394,6 +388,7 @@ modules:
           - patches/linphone-desktop/CMake-build-from-archive.patch
           - patches/linphone-desktop/CMake-flatpak-packaging.patch
           - patches/sdk/liblinphone/Fix-use-of-function-deleted-in-SOCI-4.1.2-and-potential-stack-use-after-scope.patch
+          - patches/sdk/mediastreamer2/Find-dependencies.patch
           - patches/sdk/external/gsm/Add-CMakeLists.txt.patch
           - patches/sdk/external/liboqs/Export-OQS_KEM_hqc_128-and-256_length.patch
           - patches/sdk/external/libyuv/FindTurboJpeg-and-CMake-integration.patch
