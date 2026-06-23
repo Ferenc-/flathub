@@ -148,6 +148,12 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_DAV1D=OFF
+      - -DENABLE_AV1=ON # Otherwise forced OFF, when BUILD_DAV1D=OFF, and this needs, and also forces ENABLE_VIDEO=ON
+      # <WORKAROUND BUGGY-FILE="FindDav1d.cmake">
+      - -D_Dav1d_INCLUDE_DIRS=/usr/include/
+      - -D_Dav1d_LIBRARY=/usr/lib/x86_64-linux-gnu/libdav1d.so
+      # </WORKAROUND>
       - -DENABLE_DOC=OFF
       - -DENABLE_FFMPEG=OFF # <- Not needed by mediastreamer2 anymore and just causes compilation issues 10+ years old (n0.10.2) baseline
       - -DENABLE_GPL_THIRD_PARTIES=ON
@@ -275,16 +281,6 @@ modules:
         # Or a faster more reliable mirror:
         url: https://github.com/Ferenc-/linphone-bv16-floatingpoint/archive/c4a341a3277e8adcc42427c4fd80a457fe934f2a.zip
         sha256: 07fb1ca72bd9eeb18e8298d899fac0ca9d956b9f9d623a3958befb5279b4250a
-      - type: archive
-        dest: external/linphone-sdk/external/dav1d
-        url: https://github.com/videolan/dav1d/archive/refs/tags/1.5.3.tar.gz
-        # NOTE: dav1d is part of the SDK but it's lagging behind the latest
-        sha256: cbe212b02faf8c6eed5b6d55ef8a6e363aaab83f15112e960701a9c3df813686
-        x-checker-data:
-          type: anitya
-          project-id: 18920
-          stable-only: true
-          url-template: https://github.com/videolan/dav1d/archive/refs/tags/$version.tar.gz
       - type: archive
         dest: external/linphone-sdk/external/decaf
         url: https://downloads.sourceforge.net/project/ed448goldilocks/libdecaf-1.0.3.tgz
