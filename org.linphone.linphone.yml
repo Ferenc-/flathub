@@ -414,7 +414,7 @@ modules:
           - patches/linphone-desktop/CMake-flatpak-packaging.patch
           - patches/sdk/liblinphone/Fix-use-of-function-deleted-in-SOCI-4.1.2-and-potential-stack-use-after-scope.patch
           - patches/sdk/external/gsm/Add-CMakeLists.txt.patch
-          - patches/sdk/external/liboqs/CMake-subdir.patch
+          - patches/sdk/external/liboqs/Export-OQS_KEM_hqc_128-and-256_length.patch
           - patches/sdk/external/libyuv/FindTurboJpeg-and-CMake-integration.patch
           - patches/sdk/external/mbedtls/CMake-Integration-And-HW-Accelerated-SHA256-on-ARMv8A.patch
           - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
