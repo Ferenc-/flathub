@@ -148,6 +148,7 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_ZLIB=OFF
       - -DBUILD_DAV1D=OFF
       - -DBUILD_AOM=OFF
       - -DENABLE_AV1=ON # Otherwise forced OFF, when BUILD_DAV1D=OFF, and this needs, and also forces ENABLE_VIDEO=ON
@@ -431,16 +432,6 @@ modules:
           project-id: 5182
           stable-only: true
           url-template: https://github.com/apache/xerces-c/archive/refs/tags/v$version.tar.gz
-      - type: archive
-        dest: external/linphone-sdk/external/zlib
-        url: https://github.com/madler/zlib/releases/download/v1.3.2/zlib-1.3.2.tar.xz
-        # NOTE: Zlib is part of the SDK but it's lagging behind the latest
-        sha256: d7a0654783a4da529d1bb793b7ad9c3318020af77667bcae35f95d0e42a792f3
-        x-checker-data:
-          type: anitya
-          project-id: 5303
-          stable-only: true
-          url-template: https://github.com/madler/zlib/releases/download/v$version/zlib-$version.tar.gz
       - type: patch
         paths:
           - patches/linphone-desktop/Own-name-match-Flatpak-ID.patch # https://docs.flathub.org/docs/for-app-authors/linter#finish-args-own-name-cpt
