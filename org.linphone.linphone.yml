@@ -148,6 +148,10 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_LIBJPEGTURBO=OFF
+      - -DBUILD_LIBVPX=OFF
+      - -DBUILD_LIBXML2=OFF
+      - -DBUILD_SPEEX=OFF
       - -DBUILD_ZLIB=OFF
       - -DBUILD_DAV1D=OFF
       - -DBUILD_AOM=OFF
@@ -320,28 +324,6 @@ modules:
           stable-only: true
           url-template: https://github.com/open-quantum-safe/liboqs/archive/refs/tags/$version.tar.gz
       - type: archive
-        dest: external/linphone-sdk/external/libvpx
-        # Reproducible alternative to:
-        # url: https://chromium.googlesource.com/webm/libvpx/+archive/v1.16.0.tar.gz
-        url: https://github.com/webmproject/libvpx/archive/refs/tags/v1.16.0.tar.gz
-        # NOTE: libvpx is part of the SDK but it's lagging behind the latest
-        sha256: 7a479a3c66b9f5d5542a4c6a1b7d3768a983b1e5c14c60a9396edc9b649e015c
-        x-checker-data:
-          type: anitya
-          project-id: 11083
-          stable-only: true
-          url-template: https://github.com/webmproject/libvpx/archive/refs/tags/$version.tar.gz
-      - type: archive
-        dest: external/linphone-sdk/external/libxml2
-        url: https://github.com/GNOME/libxml2/archive/refs/tags/v2.15.3.tar.gz
-        # NOTE: libxml2 is part of the SDK but it's lagging behind the latest
-        sha256: 5c6060277173270356c3f1c321a640ab629bdabc5e5ba9095b99e00759ba0c39
-        x-checker-data:
-          type: anitya
-          project-id: 1783
-          stable-only: true
-          url-template: https://github.com/GNOME/libxml2/archive/refs/tags/$version.tar.gz
-      - type: archive
         dest: external/linphone-sdk/external/libyuv
         # Reproducible alternative to:
         # url: https://chromium.googlesource.com/libyuv/libyuv/+archive/4afb9654162e142b52d349471823815f4c60bc3d.tar.gz
@@ -438,7 +420,6 @@ modules:
           - patches/linphone-desktop/Add-missing-English-translation.patch
           - patches/linphone-desktop/CMake-build-from-archive.patch
           - patches/linphone-desktop/CMake-flatpak-packaging.patch
-          - patches/sdk/Fix-LibXml2-target-name.patch
           - patches/sdk/liblinphone/Fix-use-of-function-deleted-in-SOCI-4.1.2-and-potential-stack-use-after-scope.patch
           - patches/sdk/external/gsm/Add-CMakeLists.txt.patch
           - patches/sdk/external/liboqs/CMake-subdir.patch
@@ -447,7 +428,6 @@ modules:
           - patches/sdk/external/openldap/Add-CMake-Enable-MbedTLS-And-Fix-Compilation.patch
           - patches/sdk/external/opus/Add-CMake-Fix-CPU-support.patch
           - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
-          - patches/sdk/external/speex/Add-CMake.patch
           - patches/sdk/external/xerces-c/Fix-C++-minimum-level.patch
       - type: file
         path: org.linphone.linphone.metainfo.xml
