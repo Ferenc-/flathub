@@ -285,8 +285,6 @@ modules:
           type: html
           url: https://sourceforge.net/p/ed448goldilocks/activity/feed",
           pattern: "<link>(https://sourceforge.net/projects/ed448goldilocks/files/libdecaf-([\\d\\.]+\\d).tgz)/download</link>"
-          versions:
-            ">": "1.0.0" # Current commit is way ahead of last release, waiting for release
       - type: archive
         dest: external/linphone-sdk/external/gsm
         url: https://www.quut.com/gsm/gsm-1.0.24.tar.gz
