@@ -87,9 +87,6 @@ modules:
       - /bin/SEnumVal
       - /bin/StdInParse
       - /bin/XInclude
-      - /bin/xml2-config
-      - /bin/xmlcatalog
-      - /bin/xmllint
       - /bin/yuvconvert
       - /include
       - /cmake
@@ -108,12 +105,9 @@ modules:
       - /lib/Ortp
       - /lib/PostQuantumCryptoEngine
       - /lib/SQLITE3
-      - /lib/Speex
-      - /lib/XML2
       - /lib/YUV
       - /lib/decaf
       - /lib/doc
-      - /lib/libjpeg-turbo
       - /lib/man
       - /lib/mbedtls
       - /lib/xerces-c
@@ -394,15 +388,6 @@ modules:
           project-id: 11081
           stable-only: true
           url-template: https://github.com/SOCI/soci/archive/refs/tags/v$version.tar.gz
-      - type: archive
-        dest: external/linphone-sdk/external/speex
-        url: https://github.com/xiph/speex/archive/refs/tags/Speex-1.2.1.tar.gz
-        sha256: beaf2642e81a822eaade4d9ebf92e1678f301abfc74a29159c4e721ee70fdce0
-        x-checker-data:
-          type: anitya
-          project-id: 14498
-          stable-only: true
-          url-template: https://github.com/xiph/speex/archive/refs/tags/Speex-$version.tar.gz
       - type: archive
         dest: external/linphone-sdk/external/xerces-c
         url: https://github.com/apache/xerces-c/archive/refs/tags/v3.3.0.tar.gz
