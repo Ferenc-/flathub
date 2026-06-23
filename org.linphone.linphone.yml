@@ -59,6 +59,34 @@ modules:
           - patches/yasm/autoconf.patch
     cleanup:
       - "*"
+  ## Binary dependencies
+  - name: OpenLDAP
+    buildsystem: autotools
+    config-opts:
+      - --disable-backends
+      - --disable-debug
+      - --disable-overlays
+      - --disable-slapd
+      - --disable-syslog
+      - --disable-static
+      - --enable-dynamic
+      - --enable-ipv6
+      - --with-cyrus-sasl
+      - --with-threads
+      - --with-tls=gnutls
+      - --without-systemd
+    sources:
+      - type: archive
+        url: https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_2_6_13.tar.gz
+        sha256: dd5be2f8e7deab34d1afc3babb7ad29fd1391860b321ffdbcab4ed7a5dfccf76
+        x-checker-data:
+          type: anitya
+          project-id: 2551
+          stable-only: true
+          url-template: https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_${version0}_${version1}_version2.tar.gz
+      - type: patch
+        paths:
+          - patches/openldap/ldap-opt-x-tls-peer-cn.patch
   - "shared-modules/glu/glu-9.json"
   - "shared-modules/glew/glew.json"
   # Linphone
@@ -142,6 +170,7 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_OPENLDAP=OFF
       - -DBUILD_OPUS=OFF
       - -DBUILD_LIBJPEGTURBO=OFF
       - -DBUILD_LIBVPX=OFF
@@ -348,15 +377,6 @@ modules:
         url: https://github.com/cisco/openh264/archive/refs/tags/v2.6.0.tar.gz
         sha256: 558544ad358283a7ab2930d69a9ceddf913f4a51ee9bf1bfb9e377322af81a69
       - type: archive
-        dest: external/linphone-sdk/external/openldap
-        url: https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_2_6_13.tar.gz
-        sha256: dd5be2f8e7deab34d1afc3babb7ad29fd1391860b321ffdbcab4ed7a5dfccf76
-        x-checker-data:
-          type: anitya
-          project-id: 2551
-          stable-only: true
-          url-template: https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_${version0}_${version1}_version2.tar.gz
-      - type: archive
         dest: external/linphone-sdk/external/sqlite3
         # NOTE:
         # Tracking the changes on top of upstream in this repo would be unmaintainable,
@@ -397,7 +417,6 @@ modules:
           - patches/sdk/external/liboqs/CMake-subdir.patch
           - patches/sdk/external/libyuv/FindTurboJpeg-and-CMake-integration.patch
           - patches/sdk/external/mbedtls/CMake-Integration-And-HW-Accelerated-SHA256-on-ARMv8A.patch
-          - patches/sdk/external/openldap/Add-CMake-Enable-MbedTLS-And-Fix-Compilation.patch
           - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
           - patches/sdk/external/xerces-c/Fix-C++-minimum-level.patch
       - type: file
