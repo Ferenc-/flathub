@@ -59,7 +59,6 @@ modules:
           - patches/yasm/autoconf.patch
     cleanup:
       - "*"
-  ## Binary dependencies
   - name: OpenLDAP
     buildsystem: autotools
     config-opts:
@@ -137,7 +136,6 @@ modules:
       - /lib/decaf
       - /lib/doc
       - /lib/man
-      - /lib/mbedtls
       - /lib/xerces-c
       - /share/doc
       - /share/man
@@ -167,9 +165,13 @@ modules:
       - /share/Speex
       - /share/decaf
       - /share/libjpeg-turbo
-      - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_LIBSRTP2=OFF
+      - -DENABLE_OPENSSL=ON
+      - -DBUILD_OPENSSL=OFF
+      - -DENABLE_MBEDTLS=OFF
+      - -DBUILD_MBEDTLS=OFF
       - -DBUILD_OPENLDAP=OFF
       - -DBUILD_OPUS=OFF
       - -DBUILD_LIBJPEGTURBO=OFF
@@ -352,27 +354,6 @@ modules:
         url: https://github.com/Ferenc-/libyuv/archive/4afb9654162e142b52d349471823815f4c60bc3d.zip
         sha256: 2474f2068e9876c322e425c496ddf6f81926d059d3cc68587de7da57c5f4568e
       - type: archive
-        dest: external/linphone-sdk/external/mbedtls
-        url: https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-3.6.6/mbedtls-3.6.6.tar.bz2
-        sha256: 8fb65fae8dcae5840f793c0a334860a411f884cc537ea290ce1c52bb64ca007a
-        x-checker-data:
-          type: anitya
-          project-id: 13824
-          stable-only: true
-          url-template: https://github.com/Mbed-TLS/mbedtls/releases/download/mbedtls-$version/mbedtls-$version.tar.gz
-          versions:
-            <: "4.0" # The 3.6 is an (LTS) branch. It will be supported with bug-fixes and security fixes until at least March 2027.
-      - type: archive
-        dest: external/linphone-sdk/external/srtp
-        url: https://github.com/cisco/libsrtp/archive/refs/tags/v2.8.0.tar.gz
-        # NOTE: librtp is part of the SDK but it's lagging behind the latest
-        sha256: d123dcff5c56d4f1a9006f2b311ea99a85016cbf3bb24b1007885d422237db85
-        x-checker-data:
-          type: anitya
-          project-id: 18547
-          stable-only: true
-          url-template: https://github.com/cisco/libsrtp/archive/refs/tags/v$version.tar.gz
-      - type: archive
         dest: external/linphone-sdk/external/openh264
         url: https://github.com/cisco/openh264/archive/refs/tags/v2.6.0.tar.gz
         sha256: 558544ad358283a7ab2930d69a9ceddf913f4a51ee9bf1bfb9e377322af81a69
@@ -416,8 +397,6 @@ modules:
           - patches/sdk/external/gsm/Add-CMakeLists.txt.patch
           - patches/sdk/external/liboqs/Export-OQS_KEM_hqc_128-and-256_length.patch
           - patches/sdk/external/libyuv/FindTurboJpeg-and-CMake-integration.patch
-          - patches/sdk/external/mbedtls/CMake-Integration-And-HW-Accelerated-SHA256-on-ARMv8A.patch
-          - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
           - patches/sdk/external/xerces-c/Fix-C++-minimum-level.patch
       - type: file
         path: org.linphone.linphone.metainfo.xml
