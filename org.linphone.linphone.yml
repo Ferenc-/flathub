@@ -149,10 +149,13 @@ modules:
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
       - -DBUILD_DAV1D=OFF
+      - -DBUILD_AOM=OFF
       - -DENABLE_AV1=ON # Otherwise forced OFF, when BUILD_DAV1D=OFF, and this needs, and also forces ENABLE_VIDEO=ON
-      # <WORKAROUND BUGGY-FILE="FindDav1d.cmake">
+      # <WORKAROUND BUGGY-FILE="FindDav1d.cmake,FindAom.cmake">
       - -D_Dav1d_INCLUDE_DIRS=/usr/include/
       - -D_Dav1d_LIBRARY=/usr/lib/x86_64-linux-gnu/libdav1d.so
+      - -D_Aom_INCLUDE_DIRS=/usr/include/
+      - -D_Aom_LIBRARY=/usr/lib/x86_64-linux-gnu/libaom.so
       # </WORKAROUND>
       - -DENABLE_DOC=OFF
       - -DENABLE_FFMPEG=OFF # <- Not needed by mediastreamer2 anymore and just causes compilation issues 10+ years old (n0.10.2) baseline
@@ -256,18 +259,6 @@ modules:
         # Same as all the releases in the 5.4.X series only 5.4.106 is missing
         url: https://github.com/BelledonneCommunications/postquantumcryptoengine/archive/refs/tags/5.4.102.tar.gz
         sha256: c4bd907140a34562d4e6de306d00804fd56d3e6cba56dd6d987433c4b9ac3b41
-      - type: archive
-        dest: external/linphone-sdk/external/aom
-        # Reproducible alternative to:
-        # url: https://aomedia.googlesource.com/aom/+archive/v3.13.3.tar.gz
-        url: https://github.com/m-ab-s/aom/archive/refs/tags/v3.13.3.tar.gz
-        # NOTE: AOM is currently part of the SDK but it's lagging behind the latest
-        sha256: 7b6c6c9317af5482b72841cb998be95c2cbbf9daf71e397614c681c94106badc
-        x-checker-data:
-          type: anitya
-          project-id: 17628
-          stable-only: true
-          url-template: https://github.com/m-ab-s/aom/archive/refs/tags/$version.tar.gz
       - type: archive
         dest: external/linphone-sdk/external/bv16-floatingpoint
         # NOTE:
