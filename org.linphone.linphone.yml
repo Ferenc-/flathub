@@ -142,6 +142,7 @@ modules:
       - /share/mbedtls
     config-opts:
       - -DCMAKE_BUILD_TYPE=RelWithDebInfo
+      - -DBUILD_OPUS=OFF
       - -DBUILD_LIBJPEGTURBO=OFF
       - -DBUILD_LIBVPX=OFF
       - -DBUILD_LIBXML2=OFF
@@ -356,18 +357,6 @@ modules:
           stable-only: true
           url-template: https://github.com/openldap/openldap/archive/refs/tags/OPENLDAP_REL_ENG_${version0}_${version1}_version2.tar.gz
       - type: archive
-        dest: external/linphone-sdk/external/opus
-        # Faster alternative to
-        # url: https://gitlab.xiph.org/xiph/opus/-/archive/v1.6.1/opus-v1.6.1.tar.bz2
-        url: https://github.com/xiph/opus/archive/refs/tags/v1.6.1.tar.gz
-        # NOTE: opus is part of the SDK but it's lagging behind the latest
-        sha256: bf0b97ec7a65890b8db90ef94c4d6c18de12584c3085031953a10986f5917745
-        x-checker-data:
-          type: anitya
-          project-id: 11081
-          stable-only: true
-          url-template: https://gitlab.xiph.org/xiph/opus/-/archive/v$version/opus-v$version.tar.gz
-      - type: archive
         dest: external/linphone-sdk/external/sqlite3
         # NOTE:
         # Tracking the changes on top of upstream in this repo would be unmaintainable,
@@ -409,7 +398,6 @@ modules:
           - patches/sdk/external/libyuv/FindTurboJpeg-and-CMake-integration.patch
           - patches/sdk/external/mbedtls/CMake-Integration-And-HW-Accelerated-SHA256-on-ARMv8A.patch
           - patches/sdk/external/openldap/Add-CMake-Enable-MbedTLS-And-Fix-Compilation.patch
-          - patches/sdk/external/opus/Add-CMake-Fix-CPU-support.patch
           - patches/sdk/external/srtp/Enhanced-FindMbedTLS.cmake.patch
           - patches/sdk/external/xerces-c/Fix-C++-minimum-level.patch
       - type: file
